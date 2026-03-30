@@ -5,13 +5,13 @@ namespace BaziDanni_k.p_.Forms.Common;
 
 public class EntityManagementForm : Form
 {
-    private readonly GenericOracleRepository _repository;
+    private readonly IRepository _repository;
     private readonly string _keyColumn;
     private readonly string[] _columns;
     private readonly Dictionary<string, TextBox> _inputs = [];
     private readonly DataGridView _grid = new() { Dock = DockStyle.Fill, ReadOnly = true, AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill };
 
-    public EntityManagementForm(string title, GenericOracleRepository repository, string keyColumn, params string[] columns)
+    public EntityManagementForm(string title, IRepository repository, string keyColumn, params string[] columns)
     {
         Text = title;
         Width = 1100;
