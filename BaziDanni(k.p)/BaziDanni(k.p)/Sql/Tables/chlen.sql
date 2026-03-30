@@ -1,0 +1,7 @@
+CREATE TABLE chlen (
+    N_chlen INTEGER PRIMARY KEY,
+    Ime_chlen VARCHAR2(40) NOT NULL,
+    EGN VARCHAR2(10) NOT NULL,
+    Telefon VARCHAR2(14),
+    Adres VARCHAR2(80)
+);
