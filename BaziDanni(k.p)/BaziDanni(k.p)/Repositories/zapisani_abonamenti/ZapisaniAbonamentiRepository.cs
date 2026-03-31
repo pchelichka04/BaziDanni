@@ -8,55 +8,25 @@ public sealed class ZapisaniAbonamentiRepository(string connectionString) : IRep
 {
     private static readonly string[] Columns = ["N_chlen", "N_grupa", "N_abonament", "Data_zapis"];
 
-    public DataTable GetAll()
-    {
-        const string sql = "SELECT N_chlen, N_grupa, N_abonament, Data_zapis FROM zapisani_abonamenti ORDER BY N_chlen";
-
-        using var connection = new OracleConnection(connectionString);
-        using var command = new OracleCommand(sql, connection);
-        using var adapter = new OracleDataAdapter(command);
-
-        var table = new DataTable();
-        adapter.Fill(table);
-        return table;
-    }
+    public DataTable GetAll() => RepositoryGuard.Query(connectionString,
+        "SELECT N_chlen, N_grupa, N_abonament, Data_zapis FROM zapisani_abonamenti ORDER BY N_chlen");
 
     public void Insert(Dictionary<string, object?> values)
     {
-        var columnNames = string.Join(", ", Columns);
-        var parameterNames = string.Join(", ", Columns.Select(column => $":{column}"));
-        var sql = $"INSERT INTO zapisani_abonamenti ({columnNames}) VALUES ({parameterNames})";
-
-        using var connection = new OracleConnection(connectionString);
-        connection.Open();
-
-        using var command = new OracleCommand(sql, connection);
-        AddParameters(command, values);
-        command.ExecuteNonQuery();
+        var sql = $"INSERT INTO zapisani_abonamenti ({string.Join(", ", Columns)}) VALUES ({string.Join(", ", Columns.Select(column => $":{column}"))})";
+        RepositoryGuard.Execute(connectionString, sql, command => AddParameters(command, values), "Добавяне в ZAPISANI_ABONAMENTI");
     }
 
     public void Update(Dictionary<string, object?> values)
     {
         const string sql = "UPDATE zapisani_abonamenti SET N_grupa = :N_grupa, N_abonament = :N_abonament, Data_zapis = :Data_zapis WHERE N_chlen = :N_chlen";
-
-        using var connection = new OracleConnection(connectionString);
-        connection.Open();
-
-        using var command = new OracleCommand(sql, connection);
-        AddParameters(command, values);
-        command.ExecuteNonQuery();
+        RepositoryGuard.Execute(connectionString, sql, command => AddParameters(command, values), "Редакция в ZAPISANI_ABONAMENTI", requireAffectedRow: true);
     }
 
     public void Delete(object key)
     {
         const string sql = "DELETE FROM zapisani_abonamenti WHERE N_chlen = :p_key";
-
-        using var connection = new OracleConnection(connectionString);
-        connection.Open();
-
-        using var command = new OracleCommand(sql, connection);
-        command.Parameters.Add(":p_key", key);
-        command.ExecuteNonQuery();
+        RepositoryGuard.Execute(connectionString, sql, command => command.Parameters.Add(":p_key", key), "Изтриване от ZAPISANI_ABONAMENTI", requireAffectedRow: true);
     }
 
     private static void AddParameters(OracleCommand command, IReadOnlyDictionary<string, object?> values)

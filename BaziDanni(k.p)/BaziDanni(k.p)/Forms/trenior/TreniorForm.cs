@@ -1,5 +1,6 @@
 using System.Data;
 using BaziDanni_k.p_.Repositories.trenior;
+using BaziDanni_k.p_.Infrastructure;
 
 namespace BaziDanni_k.p_.Forms.trenior;
 
@@ -54,6 +55,8 @@ public sealed class TreniorForm : Form
 
         Controls.Add(_grid);
         Controls.Add(top);
+
+        UiStyler.MakeButtonsMoreVisible(this);
     }
 
     private Dictionary<string, object?> GetValues() => new()

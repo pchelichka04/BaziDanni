@@ -1,5 +1,6 @@
 using System.Data;
 using BaziDanni_k.p_.Repositories.trenirovka;
+using BaziDanni_k.p_.Infrastructure;
 
 namespace BaziDanni_k.p_.Forms.trenirovka;
 
@@ -48,6 +49,8 @@ public sealed class TrenirovkaForm : Form
 
         Controls.Add(_grid);
         Controls.Add(top);
+
+        UiStyler.MakeButtonsMoreVisible(this);
     }
 
     private Dictionary<string, object?> GetValues() => new()

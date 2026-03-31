@@ -8,55 +8,25 @@ public sealed class SportRepository(string connectionString) : IRepository
 {
     private static readonly string[] Columns = ["N_sport", "Ime_sport", "Cvyat"];
 
-    public DataTable GetAll()
-    {
-        const string sql = "SELECT N_sport, Ime_sport, Cvyat FROM sport ORDER BY N_sport";
-
-        using var connection = new OracleConnection(connectionString);
-        using var command = new OracleCommand(sql, connection);
-        using var adapter = new OracleDataAdapter(command);
-
-        var table = new DataTable();
-        adapter.Fill(table);
-        return table;
-    }
+    public DataTable GetAll() => RepositoryGuard.Query(connectionString,
+        "SELECT N_sport, Ime_sport, Cvyat FROM sport ORDER BY N_sport");
 
     public void Insert(Dictionary<string, object?> values)
     {
-        var columnNames = string.Join(", ", Columns);
-        var parameterNames = string.Join(", ", Columns.Select(column => $":{column}"));
-        var sql = $"INSERT INTO sport ({columnNames}) VALUES ({parameterNames})";
-
-        using var connection = new OracleConnection(connectionString);
-        connection.Open();
-
-        using var command = new OracleCommand(sql, connection);
-        AddParameters(command, values);
-        command.ExecuteNonQuery();
+        var sql = $"INSERT INTO sport ({string.Join(", ", Columns)}) VALUES ({string.Join(", ", Columns.Select(column => $":{column}"))})";
+        RepositoryGuard.Execute(connectionString, sql, command => AddParameters(command, values), "Добавяне в SPORT");
     }
 
     public void Update(Dictionary<string, object?> values)
     {
         const string sql = "UPDATE sport SET Ime_sport = :Ime_sport, Cvyat = :Cvyat WHERE N_sport = :N_sport";
-
-        using var connection = new OracleConnection(connectionString);
-        connection.Open();
-
-        using var command = new OracleCommand(sql, connection);
-        AddParameters(command, values);
-        command.ExecuteNonQuery();
+        RepositoryGuard.Execute(connectionString, sql, command => AddParameters(command, values), "Редакция в SPORT", requireAffectedRow: true);
     }
 
     public void Delete(object key)
     {
         const string sql = "DELETE FROM sport WHERE N_sport = :p_key";
-
-        using var connection = new OracleConnection(connectionString);
-        connection.Open();
-
-        using var command = new OracleCommand(sql, connection);
-        command.Parameters.Add(":p_key", key);
-        command.ExecuteNonQuery();
+        RepositoryGuard.Execute(connectionString, sql, command => command.Parameters.Add(":p_key", key), "Изтриване от SPORT", requireAffectedRow: true);
     }
 
     private static void AddParameters(OracleCommand command, IReadOnlyDictionary<string, object?> values)

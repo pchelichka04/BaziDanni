@@ -8,55 +8,25 @@ public sealed class NivoRepository(string connectionString) : IRepository
 {
     private static readonly string[] Columns = ["N_nivo", "Ime_nivo", "Cvyat"];
 
-    public DataTable GetAll()
-    {
-        const string sql = "SELECT N_nivo, Ime_nivo, Cvyat FROM nivo ORDER BY N_nivo";
-
-        using var connection = new OracleConnection(connectionString);
-        using var command = new OracleCommand(sql, connection);
-        using var adapter = new OracleDataAdapter(command);
-
-        var table = new DataTable();
-        adapter.Fill(table);
-        return table;
-    }
+    public DataTable GetAll() => RepositoryGuard.Query(connectionString,
+        "SELECT N_nivo, Ime_nivo, Cvyat FROM nivo ORDER BY N_nivo");
 
     public void Insert(Dictionary<string, object?> values)
     {
-        var columnNames = string.Join(", ", Columns);
-        var parameterNames = string.Join(", ", Columns.Select(column => $":{column}"));
-        var sql = $"INSERT INTO nivo ({columnNames}) VALUES ({parameterNames})";
-
-        using var connection = new OracleConnection(connectionString);
-        connection.Open();
-
-        using var command = new OracleCommand(sql, connection);
-        AddParameters(command, values);
-        command.ExecuteNonQuery();
+        var sql = $"INSERT INTO nivo ({string.Join(", ", Columns)}) VALUES ({string.Join(", ", Columns.Select(column => $":{column}"))})";
+        RepositoryGuard.Execute(connectionString, sql, command => AddParameters(command, values), "Добавяне в NIVO");
     }
 
     public void Update(Dictionary<string, object?> values)
     {
         const string sql = "UPDATE nivo SET Ime_nivo = :Ime_nivo, Cvyat = :Cvyat WHERE N_nivo = :N_nivo";
-
-        using var connection = new OracleConnection(connectionString);
-        connection.Open();
-
-        using var command = new OracleCommand(sql, connection);
-        AddParameters(command, values);
-        command.ExecuteNonQuery();
+        RepositoryGuard.Execute(connectionString, sql, command => AddParameters(command, values), "Редакция в NIVO", requireAffectedRow: true);
     }
 
     public void Delete(object key)
     {
         const string sql = "DELETE FROM nivo WHERE N_nivo = :p_key";
-
-        using var connection = new OracleConnection(connectionString);
-        connection.Open();
-
-        using var command = new OracleCommand(sql, connection);
-        command.Parameters.Add(":p_key", key);
-        command.ExecuteNonQuery();
+        RepositoryGuard.Execute(connectionString, sql, command => command.Parameters.Add(":p_key", key), "Изтриване от NIVO", requireAffectedRow: true);
     }
 
     private static void AddParameters(OracleCommand command, IReadOnlyDictionary<string, object?> values)

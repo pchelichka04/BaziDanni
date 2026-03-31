@@ -1,5 +1,6 @@
 using System.Data;
 using BaziDanni_k.p_.Repositories.den_sedmica;
+using BaziDanni_k.p_.Infrastructure;
 
 namespace BaziDanni_k.p_.Forms.den_sedmica;
 
@@ -52,6 +53,9 @@ public sealed class DenSedmicaForm : Form
 
         Controls.Add(_grid);
         Controls.Add(toolbar);
+
+        UiStyler.StyleToolStrip(toolbar);
+        UiStyler.MakeButtonsMoreVisible(this);
     }
 
     private Dictionary<string, object?> GetValues() => new()
