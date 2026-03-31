@@ -37,9 +37,9 @@ public sealed class ZapisaniAbonamentiForm : Form
         strip.Items.Add(new ToolStripControlHost(_date));
 
         var btnAdd = new ToolStripDropDownButton("Действия");
-        btnAdd.DropDownItems.Add("Добави", null, (_, _) => { _repository.Insert(GetValues()); LoadData(); }); });
-        btnAdd.DropDownItems.Add("Редактирай", null, (_, _) => { _repository.Update(GetValues()); LoadData(); }); });
-        btnAdd.DropDownItems.Add("Изтрий", null, (_, _) => { _repository.Delete(_txtChlen.Text.Trim()); LoadData(); }); });
+        btnAdd.DropDownItems.Add("Добави", null, (_, _) => { _repository.Insert(GetValues()); LoadData(); });
+        btnAdd.DropDownItems.Add("Редактирай", null, (_, _) => { _repository.Update(GetValues()); LoadData(); });
+        btnAdd.DropDownItems.Add("Изтрий", null, (_, _) => { _repository.Delete(_txtChlen.Text.Trim()); LoadData(); });
         strip.Items.Add(btnAdd);
 
         _grid.SelectionChanged += (_, _) => BindSelected();

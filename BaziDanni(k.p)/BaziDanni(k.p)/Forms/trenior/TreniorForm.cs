@@ -26,23 +26,16 @@ public sealed class TreniorForm : Form
 
     private void BuildUi()
     {
-        var top = new Panel { Dock = DockStyle.Top, Height = 120, Padding = new Padding(10) };
-        top.Controls.Add(new Label { Text = "Номер", Left = 10, Top = 15, Width = 90 });
-        top.Controls.Add(_txtId);
-        _txtId.Left = 10; _txtId.Top = 38;
+        var top = new FlowLayoutPanel { Dock = DockStyle.Top, AutoSize = true, AutoSizeMode = AutoSizeMode.GrowAndShrink, Padding = new Padding(10) };
 
-        top.Controls.Add(new Label { Text = "Име на треньор", Left = 130, Top = 15, Width = 120 });
-        _txtName.Left = 130; _txtName.Top = 38; top.Controls.Add(_txtName);
+        top.Controls.Add(CreateLabeled("Номер", _txtId));
+        top.Controls.Add(CreateLabeled("Име на треньор", _txtName));
+        top.Controls.Add(CreateLabeled("Номер спорт", _txtSportId));
+        top.Controls.Add(CreateLabeled("Телефон", _txtPhone));
 
-        top.Controls.Add(new Label { Text = "Номер спорт", Left = 370, Top = 15, Width = 100 });
-        _txtSportId.Left = 370; _txtSportId.Top = 38; top.Controls.Add(_txtSportId);
-
-        top.Controls.Add(new Label { Text = "Телефон", Left = 500, Top = 15, Width = 100 });
-        _txtPhone.Left = 500; _txtPhone.Top = 38; top.Controls.Add(_txtPhone);
-
-        var btnAdd = new Button { Text = "Добави", Left = 650, Top = 35, Width = 90 };
-        var btnEdit = new Button { Text = "Редактирай", Left = 745, Top = 35, Width = 90 };
-        var btnDelete = new Button { Text = "Изтрий", Left = 840, Top = 35, Width = 90 };
+        var btnAdd = new Button { Text = "Добави" };
+        var btnEdit = new Button { Text = "Редактирай" };
+        var btnDelete = new Button { Text = "Изтрий" };
 
         btnAdd.Click += (_, _) => { _repository.Insert(GetValues()); LoadData(); };
         btnEdit.Click += (_, _) => { _repository.Update(GetValues()); LoadData(); };
@@ -57,6 +50,15 @@ public sealed class TreniorForm : Form
         Controls.Add(top);
 
         UiStyler.MakeButtonsMoreVisible(this);
+    }
+
+    private static Panel CreateLabeled(string label, Control control)
+    {
+        var wrapper = new Panel { Width = control.Width + 8, Height = 52 };
+        wrapper.Controls.Add(new Label { Text = label, Dock = DockStyle.Top, Height = 20 });
+        control.Top = 22;
+        wrapper.Controls.Add(control);
+        return wrapper;
     }
 
     private Dictionary<string, object?> GetValues() => new()
