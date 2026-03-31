@@ -1,68 +1,27 @@
 using System.Data;
-using BaziDanni_k.p_.Repositories.chlen;
 using BaziDanni_k.p_.Infrastructure;
+using BaziDanni_k.p_.Repositories.chlen;
 
 namespace BaziDanni_k.p_.Forms.chlen;
 
-public sealed class ChlenForm : Form
+public sealed partial class ChlenForm : Form
 {
     private readonly ChlenRepository _repository;
-    private readonly DataGridView _grid = new() { Dock = DockStyle.Fill, ReadOnly = true, AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill };
-    private readonly TextBox _txtId = new() { Width = 120 };
-    private readonly TextBox _txtName = new() { Width = 220 };
-    private readonly TextBox _txtEgn = new() { Width = 140 };
-    private readonly MaskedTextBox _txtPhone = new("0000-000-000") { Width = 130 };
-    private readonly TextBox _txtAddress = new() { Width = 280 };
 
     public ChlenForm(string cs)
     {
-        Text = "Управление: CHLEN";
-        Width = 1150;
-        Height = 620;
         _repository = new ChlenRepository(cs);
 
-        BuildUi();
-        LoadData();
-    }
+        InitializeComponent();
 
-    private void BuildUi()
-    {
-        var top = new GroupBox { Text = "Данни за член", Dock = DockStyle.Top, AutoSize = true };
-        var panel = new FlowLayoutPanel { Dock = DockStyle.Fill, Padding = new Padding(10), AutoSize = true, AutoSizeMode = AutoSizeMode.GrowAndShrink };
-
-        panel.Controls.AddRange([
-            CreateLabeled("Номер", _txtId),
-            CreateLabeled("Име", _txtName),
-            CreateLabeled("ЕГН", _txtEgn),
-            CreateLabeled("Телефон", _txtPhone),
-            CreateLabeled("Адрес", _txtAddress)
-        ]);
-
-        var btnAdd = new Button { Text = "Добави", Width = 100 };
-        var btnEdit = new Button { Text = "Промени", Width = 100 };
-        var btnDelete = new Button { Text = "Премахни", Width = 100 };
-        var btnRefresh = new Button { Text = "Обнови", Width = 100 };
-        btnAdd.Click += (_, _) => { _repository.Insert(GetValues()); LoadData(); };
-        btnEdit.Click += (_, _) => { _repository.Update(GetValues()); LoadData(); };
-        btnDelete.Click += (_, _) => { _repository.Delete(_txtId.Text.Trim()); LoadData(); };
-        btnRefresh.Click += (_, _) => LoadData();
+        _btnAdd.Click += (_, _) => { _repository.Insert(GetValues()); LoadData(); };
+        _btnEdit.Click += (_, _) => { _repository.Update(GetValues()); LoadData(); };
+        _btnDelete.Click += (_, _) => { _repository.Delete(_txtId.Text.Trim()); LoadData(); };
+        _btnRefresh.Click += (_, _) => LoadData();
         _grid.SelectionChanged += (_, _) => BindSelected();
-        panel.Controls.AddRange([btnAdd, btnEdit, btnDelete, btnRefresh]);
-
-        top.Controls.Add(panel);
-        Controls.Add(_grid);
-        Controls.Add(top);
 
         UiStyler.MakeButtonsMoreVisible(this);
-    }
-
-    private static Panel CreateLabeled(string label, Control control)
-    {
-        var wrapper = new Panel { Width = control.Width + 8, Height = 52 };
-        wrapper.Controls.Add(new Label { Text = label, Dock = DockStyle.Top, Height = 20 });
-        control.Top = 22;
-        wrapper.Controls.Add(control);
-        return wrapper;
+        LoadData();
     }
 
     private Dictionary<string, object?> GetValues() => new()
