@@ -12,9 +12,9 @@
   <ItemGroup>
     <PackageReference Include="Oracle.ManagedDataAccess.Core" Version="3.21.150" />
   </ItemGroup>
-	
-    <ItemGroup>
-		<Content Include="..\BaziDanni(k.p.)\Sql\**">
+
+	<ItemGroup>
+		<Content Include="Sql\**\*.*">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</Content>
 	</ItemGroup>
