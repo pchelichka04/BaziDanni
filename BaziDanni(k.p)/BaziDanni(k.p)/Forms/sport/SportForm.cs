@@ -1,5 +1,6 @@
 using System.Data;
 using BaziDanni_k.p_.Repositories.sport;
+using BaziDanni_k.p_.Infrastructure;
 
 namespace BaziDanni_k.p_.Forms.sport;
 
@@ -52,6 +53,8 @@ public sealed class SportForm : Form
         split.Panel2.Controls.Add(_grid);
 
         Controls.Add(split);
+
+        UiStyler.MakeButtonsMoreVisible(this);
     }
 
     private Dictionary<string, object?> GetValues() => new()

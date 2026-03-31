@@ -1,5 +1,6 @@
 using System.Data;
 using BaziDanni_k.p_.Repositories.nivo;
+using BaziDanni_k.p_.Infrastructure;
 
 namespace BaziDanni_k.p_.Forms.nivo;
 
@@ -52,6 +53,8 @@ public sealed class NivoForm : Form
         top.Controls.Add(flow);
         Controls.Add(_grid);
         Controls.Add(top);
+
+        UiStyler.MakeButtonsMoreVisible(this);
     }
 
     private Dictionary<string, object?> GetValues() => new()

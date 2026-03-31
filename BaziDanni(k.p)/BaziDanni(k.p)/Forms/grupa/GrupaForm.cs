@@ -3,6 +3,7 @@ using BaziDanni_k.p_.Repositories.grupa;
 using BaziDanni_k.p_.Repositories.nivo;
 using BaziDanni_k.p_.Repositories.sport;
 using BaziDanni_k.p_.Repositories.trenior;
+using BaziDanni_k.p_.Infrastructure;
 
 namespace BaziDanni_k.p_.Forms.grupa;
 
@@ -76,6 +77,8 @@ public sealed class GrupaForm : Form
 
         Controls.Add(_grid);
         Controls.Add(top);
+
+        UiStyler.MakeButtonsMoreVisible(this);
     }
 
     private void LoadLookups()

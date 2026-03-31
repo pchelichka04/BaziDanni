@@ -1,5 +1,6 @@
 using System.Data;
 using BaziDanni_k.p_.Repositories.zapisani_abonamenti;
+using BaziDanni_k.p_.Infrastructure;
 
 namespace BaziDanni_k.p_.Forms.zapisani_abonamenti;
 
@@ -36,15 +37,18 @@ public sealed class ZapisaniAbonamentiForm : Form
         strip.Items.Add(new ToolStripControlHost(_date));
 
         var btnAdd = new ToolStripDropDownButton("Действия");
-        btnAdd.DropDownItems.Add("Добави", null, (_, _) => { _repository.Insert(GetValues()); LoadData(); });
-        btnAdd.DropDownItems.Add("Редактирай", null, (_, _) => { _repository.Update(GetValues()); LoadData(); });
-        btnAdd.DropDownItems.Add("Изтрий", null, (_, _) => { _repository.Delete(_txtChlen.Text.Trim()); LoadData(); });
+        btnAdd.DropDownItems.Add("Добави", null, (_, _) => { _repository.Insert(GetValues()); LoadData(); }); });
+        btnAdd.DropDownItems.Add("Редактирай", null, (_, _) => { _repository.Update(GetValues()); LoadData(); }); });
+        btnAdd.DropDownItems.Add("Изтрий", null, (_, _) => { _repository.Delete(_txtChlen.Text.Trim()); LoadData(); }); });
         strip.Items.Add(btnAdd);
 
         _grid.SelectionChanged += (_, _) => BindSelected();
 
         Controls.Add(_grid);
         Controls.Add(strip);
+
+        UiStyler.StyleToolStrip(strip);
+        UiStyler.MakeButtonsMoreVisible(this);
     }
 
     private Dictionary<string, object?> GetValues() => new()

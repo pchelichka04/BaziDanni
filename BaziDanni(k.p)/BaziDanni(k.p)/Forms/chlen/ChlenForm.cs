@@ -1,5 +1,6 @@
 using System.Data;
 using BaziDanni_k.p_.Repositories.chlen;
+using BaziDanni_k.p_.Infrastructure;
 
 namespace BaziDanni_k.p_.Forms.chlen;
 
@@ -51,6 +52,8 @@ public sealed class ChlenForm : Form
         top.Controls.Add(panel);
         Controls.Add(_grid);
         Controls.Add(top);
+
+        UiStyler.MakeButtonsMoreVisible(this);
     }
 
     private static Panel CreateLabeled(string label, Control control)

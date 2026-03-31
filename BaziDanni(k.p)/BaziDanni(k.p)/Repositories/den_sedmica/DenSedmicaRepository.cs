@@ -8,55 +8,25 @@ public sealed class DenSedmicaRepository(string connectionString) : IRepository
 {
     private static readonly string[] Columns = ["N_den", "Den", "Cvyat"];
 
-    public DataTable GetAll()
-    {
-        const string sql = "SELECT N_den, Den, Cvyat FROM den_sedmica ORDER BY N_den";
-
-        using var connection = new OracleConnection(connectionString);
-        using var command = new OracleCommand(sql, connection);
-        using var adapter = new OracleDataAdapter(command);
-
-        var table = new DataTable();
-        adapter.Fill(table);
-        return table;
-    }
+    public DataTable GetAll() => RepositoryGuard.Query(connectionString,
+        "SELECT N_den, Den, Cvyat FROM den_sedmica ORDER BY N_den");
 
     public void Insert(Dictionary<string, object?> values)
     {
-        var columnNames = string.Join(", ", Columns);
-        var parameterNames = string.Join(", ", Columns.Select(column => $":{column}"));
-        var sql = $"INSERT INTO den_sedmica ({columnNames}) VALUES ({parameterNames})";
-
-        using var connection = new OracleConnection(connectionString);
-        connection.Open();
-
-        using var command = new OracleCommand(sql, connection);
-        AddParameters(command, values);
-        command.ExecuteNonQuery();
+        var sql = $"INSERT INTO den_sedmica ({string.Join(", ", Columns)}) VALUES ({string.Join(", ", Columns.Select(column => $":{column}"))})";
+        RepositoryGuard.Execute(connectionString, sql, command => AddParameters(command, values), "Добавяне в DEN_SEDMICA");
     }
 
     public void Update(Dictionary<string, object?> values)
     {
         const string sql = "UPDATE den_sedmica SET Den = :Den, Cvyat = :Cvyat WHERE N_den = :N_den";
-
-        using var connection = new OracleConnection(connectionString);
-        connection.Open();
-
-        using var command = new OracleCommand(sql, connection);
-        AddParameters(command, values);
-        command.ExecuteNonQuery();
+        RepositoryGuard.Execute(connectionString, sql, command => AddParameters(command, values), "Редакция в DEN_SEDMICA", requireAffectedRow: true);
     }
 
     public void Delete(object key)
     {
         const string sql = "DELETE FROM den_sedmica WHERE N_den = :p_key";
-
-        using var connection = new OracleConnection(connectionString);
-        connection.Open();
-
-        using var command = new OracleCommand(sql, connection);
-        command.Parameters.Add(":p_key", key);
-        command.ExecuteNonQuery();
+        RepositoryGuard.Execute(connectionString, sql, command => command.Parameters.Add(":p_key", key), "Изтриване от DEN_SEDMICA", requireAffectedRow: true);
     }
 
     private static void AddParameters(OracleCommand command, IReadOnlyDictionary<string, object?> values)

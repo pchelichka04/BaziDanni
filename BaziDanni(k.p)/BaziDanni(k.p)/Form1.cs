@@ -7,6 +7,7 @@ using BaziDanni_k.p_.Forms.sport;
 using BaziDanni_k.p_.Forms.trenior;
 using BaziDanni_k.p_.Forms.trenirovka;
 using BaziDanni_k.p_.Forms.zapisani_abonamenti;
+using BaziDanni_k.p_.Infrastructure;
 
 namespace BaziDanni_k.p_;
 
@@ -45,16 +46,17 @@ public partial class Form1 : Form
         panel.Controls.Add(CreateOpenButton("ZAPISANI_ABONAMENTI", () => new ZapisaniAbonamentiForm(ConnectionString).ShowDialog()));
 
         Controls.Add(panel);
+        UiStyler.MakeButtonsMoreVisible(this);
     }
 
-    private static Button CreateOpenButton(string text, Action onClick)
+    private Button CreateOpenButton(string text, Action onClick)
     {
         var button = new Button
         {
             Text = text,
-            Width = 220,
-            Height = 48,
-            Margin = new Padding(8)
+            Width = 240,
+            Height = 56,
+            Margin = new Padding(10)
         };
 
         button.Click += (_, _) => onClick();
