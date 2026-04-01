@@ -1,12 +1,4 @@
-using BaziDanni_k.p_.Forms.abonament;
-using BaziDanni_k.p_.Forms.chlen;
-using BaziDanni_k.p_.Forms.den_sedmica;
-using BaziDanni_k.p_.Forms.grupa;
-using BaziDanni_k.p_.Forms.nivo;
-using BaziDanni_k.p_.Forms.sport;
-using BaziDanni_k.p_.Forms.trenior;
-using BaziDanni_k.p_.Forms.trenirovka;
-using BaziDanni_k.p_.Forms.zapisani_abonamenti;
+using BaziDanni_k.p_.Forms;
 using BaziDanni_k.p_.Infrastructure;
 
 namespace BaziDanni_k.p_;
@@ -19,47 +11,50 @@ public partial class Form1 : Form
     public Form1()
     {
         InitializeComponent();
-        BuildMenu();
     }
 
-    private void BuildMenu()
+    private void BtnNivo_Click(object sender, EventArgs e)
     {
-        Text = "Курсов проект - Управление на таблици";
-        Width = 800;
-        Height = 500;
-
-        var panel = new FlowLayoutPanel
-        {
-            Dock = DockStyle.Fill,
-            Padding = new Padding(16),
-            AutoScroll = true
-        };
-
-        panel.Controls.Add(CreateOpenButton("NIVO", () => new NivoForm(ConnectionString).ShowDialog()));
-        panel.Controls.Add(CreateOpenButton("DEN_SEDMICA", () => new DenSedmicaForm(ConnectionString).ShowDialog()));
-        panel.Controls.Add(CreateOpenButton("ABONAMENT", () => new AbonamentForm(ConnectionString).ShowDialog()));
-        panel.Controls.Add(CreateOpenButton("CHLEN", () => new ChlenForm(ConnectionString).ShowDialog()));
-        panel.Controls.Add(CreateOpenButton("SPORT", () => new SportForm(ConnectionString).ShowDialog()));
-        panel.Controls.Add(CreateOpenButton("TRENIOR", () => new TreniorForm(ConnectionString).ShowDialog()));
-        panel.Controls.Add(CreateOpenButton("GRUPA", () => new GrupaForm(ConnectionString).ShowDialog()));
-        panel.Controls.Add(CreateOpenButton("TRENIROVKA", () => new TrenirovkaForm(ConnectionString).ShowDialog()));
-        panel.Controls.Add(CreateOpenButton("ZAPISANI_ABONAMENTI", () => new ZapisaniAbonamentiForm(ConnectionString).ShowDialog()));
-
-        Controls.Add(panel);
-        UiStyler.MakeButtonsMoreVisible(this);
+        new NivoForm(ConnectionString).ShowDialog();
     }
 
-    private Button CreateOpenButton(string text, Action onClick)
+    private void BtnDenSedmica_Click(object sender, EventArgs e)
     {
-        var button = new Button
-        {
-            Text = text,
-            Width = 240,
-            Height = 56,
-            Margin = new Padding(10)
-        };
+        new DenSedmicaForm(ConnectionString).ShowDialog();
+    }
 
-        button.Click += (_, _) => onClick();
-        return button;
+    private void BtnAbonament_Click(object sender, EventArgs e)
+    {
+        new AbonamentForm(ConnectionString).ShowDialog();
+    }
+
+    private void BtnChlen_Click(object sender, EventArgs e)
+    {
+        new ChlenForm(ConnectionString).ShowDialog();
+    }
+
+    private void BtnSport_Click(object sender, EventArgs e)
+    {
+        new SportForm(ConnectionString).ShowDialog();
+    }
+
+    private void BtnTrenior_Click(object sender, EventArgs e)
+    {
+        new TreniorForm(ConnectionString).ShowDialog();
+    }
+
+    private void BtnGrupa_Click(object sender, EventArgs e)
+    {
+        new GrupaForm(ConnectionString).ShowDialog();
+    }
+
+    private void BtnTrenirovka_Click(object sender, EventArgs e)
+    {
+        new TrenirovkaForm(ConnectionString).ShowDialog();
+    }
+
+    private void BtnZapisaniAbonamenti_Click(object sender, EventArgs e)
+    {
+        new ZapisaniAbonamentiForm(ConnectionString).ShowDialog();
     }
 }

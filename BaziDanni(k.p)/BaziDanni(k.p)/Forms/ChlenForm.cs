@@ -2,7 +2,7 @@ using System.Data;
 using BaziDanni_k.p_.Infrastructure;
 using BaziDanni_k.p_.Repositories.chlen;
 
-namespace BaziDanni_k.p_.Forms.chlen;
+namespace BaziDanni_k.p_.Forms;
 
 public sealed partial class ChlenForm : Form
 {
@@ -13,16 +13,30 @@ public sealed partial class ChlenForm : Form
         _repository = new ChlenRepository(cs);
 
         InitializeComponent();
-
-        _btnAdd.Click += (_, _) => { _repository.Insert(GetValues()); LoadData(); };
-        _btnEdit.Click += (_, _) => { _repository.Update(GetValues()); LoadData(); };
-        _btnDelete.Click += (_, _) => { _repository.Delete(_txtId.Text.Trim()); LoadData(); };
-        _btnRefresh.Click += (_, _) => LoadData();
-        _grid.SelectionChanged += (_, _) => BindSelected();
-
-        UiStyler.MakeButtonsMoreVisible(this);
         LoadData();
     }
+
+    private void BtnAdd_Click(object? sender, EventArgs e)
+    {
+        _repository.Insert(GetValues());
+        LoadData();
+    }
+
+    private void BtnEdit_Click(object? sender, EventArgs e)
+    {
+        _repository.Update(GetValues());
+        LoadData();
+    }
+
+    private void BtnDelete_Click(object? sender, EventArgs e)
+    {
+        _repository.Delete(_txtId.Text.Trim());
+        LoadData();
+    }
+
+    private void BtnRefresh_Click(object? sender, EventArgs e) => LoadData();
+
+    private void Grid_SelectionChanged(object? sender, EventArgs e) => BindSelected();
 
     private Dictionary<string, object?> GetValues() => new()
     {
