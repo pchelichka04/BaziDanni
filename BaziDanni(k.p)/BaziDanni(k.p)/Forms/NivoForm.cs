@@ -13,7 +13,6 @@ public sealed partial class NivoForm : Form
     {
         _repository = new NivoRepository(cs);
         InitializeComponent();
-        UiStyler.MakeButtonsMoreVisible(this);
         LoadData();
     }
 

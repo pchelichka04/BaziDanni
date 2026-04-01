@@ -36,7 +36,7 @@ partial class GrupaForm
         _grid.Location = new Point(12, 110); _grid.Size = new Size(1076, 498); _grid.SelectionChanged += Grid_SelectionChanged;
 
         AutoScaleDimensions = new SizeF(8F,20F); AutoScaleMode = AutoScaleMode.Font; ClientSize = new Size(1100,620); Text = "Управление: GRUPA"; Name = "GrupaForm";
-        Controls.AddRange([_grid,_btnRefresh,_btnDelete,_btnEdit,_btnAdd,_cmbTrenior,_lblTrenior,_cmbNivo,_lblNivo,_cmbSport,_lblSport,_txtNGrupa,_lblNGrupa]);
+        Controls.AddRange(new Control[] { _grid,_btnRefresh,_btnDelete,_btnEdit,_btnAdd,_cmbTrenior,_lblTrenior,_cmbNivo,_lblNivo,_cmbSport,_lblSport,_txtNGrupa,_lblNGrupa});
         ((System.ComponentModel.ISupportInitialize)_grid).EndInit(); ResumeLayout(false); PerformLayout();
     }
 

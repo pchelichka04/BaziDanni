@@ -31,12 +31,25 @@ partial class AbonamentForm
         ((System.ComponentModel.ISupportInitialize)_numPrice).BeginInit();
         SuspendLayout();
         // 
+        // _grid
+        // 
+        _grid.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+        _grid.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+        _grid.ColumnHeadersHeight = 29;
+        _grid.Location = new Point(12, 100);
+        _grid.Name = "_grid";
+        _grid.ReadOnly = true;
+        _grid.RowHeadersWidth = 51;
+        _grid.Size = new Size(926, 468);
+        _grid.TabIndex = 9;
+        _grid.SelectionChanged += Grid_SelectionChanged;
+        // 
         // _lblId
         // 
         _lblId.AutoSize = true;
         _lblId.Location = new Point(12, 15);
         _lblId.Name = "_lblId";
-        _lblId.Size = new Size(49, 20);
+        _lblId.Size = new Size(57, 20);
         _lblId.TabIndex = 0;
         _lblId.Text = "Номер";
         // 
@@ -45,7 +58,7 @@ partial class AbonamentForm
         _lblPeriod.AutoSize = true;
         _lblPeriod.Location = new Point(182, 15);
         _lblPeriod.Name = "_lblPeriod";
-        _lblPeriod.Size = new Size(112, 20);
+        _lblPeriod.Size = new Size(106, 20);
         _lblPeriod.TabIndex = 1;
         _lblPeriod.Text = "Период (мес.)";
         // 
@@ -54,7 +67,7 @@ partial class AbonamentForm
         _lblPrice.AutoSize = true;
         _lblPrice.Location = new Point(382, 15);
         _lblPrice.Name = "_lblPrice";
-        _lblPrice.Size = new Size(79, 20);
+        _lblPrice.Size = new Size(78, 20);
         _lblPrice.TabIndex = 2;
         _lblPrice.Text = "Цена (лв.)";
         // 
@@ -112,18 +125,6 @@ partial class AbonamentForm
         _btnDelete.TabIndex = 8;
         _btnDelete.Text = "Изтрий";
         _btnDelete.Click += BtnDelete_Click;
-        // 
-        // _grid
-        // 
-        _grid.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-        _grid.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-        _grid.Location = new Point(12, 100);
-        _grid.Name = "_grid";
-        _grid.ReadOnly = true;
-        _grid.RowHeadersWidth = 51;
-        _grid.Size = new Size(926, 468);
-        _grid.TabIndex = 9;
-        _grid.SelectionChanged += Grid_SelectionChanged;
         // 
         // AbonamentForm
         // 

@@ -1,5 +1,4 @@
 using System.Data;
-using BaziDanni_k.p_.Infrastructure;
 using BaziDanni_k.p_.Repositories.abonament;
 
 namespace BaziDanni_k.p_.Forms;
@@ -14,7 +13,6 @@ public sealed partial class AbonamentForm : Form
 
         InitializeComponent();
 
-        UiStyler.MakeButtonsMoreVisible(this);
         LoadData();
     }
 

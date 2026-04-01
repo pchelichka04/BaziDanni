@@ -10,7 +10,6 @@ public sealed partial class SportForm : Form
     {
         _repository = new SportRepository(cs);
         InitializeComponent();
-        UiStyler.MakeButtonsMoreVisible(this);
         LoadData();
     }
     private void Add_Click(object? s, EventArgs e){ _repository.Insert(GetValues()); LoadData(); }

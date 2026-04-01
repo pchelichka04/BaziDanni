@@ -25,12 +25,12 @@ partial class DenSedmicaForm
 
         _lblDay.AutoSize = true; _lblDay.Location = new Point(122, 15); _lblDay.Text = "Ден";
         _cmbDay.Location = new Point(122, 38); _cmbDay.Width = 160; _cmbDay.DropDownStyle = ComboBoxStyle.DropDownList;
-        _cmbDay.Items.AddRange(["Понеделник", "Вторник", "Сряда", "Четвъртък", "Петък", "Събота", "Неделя"]);
+        _cmbDay.Items.AddRange(new object[] { "Понеделник", "Вторник", "Сряда", "Четвъртък", "Петък", "Събота", "Неделя" });
         _cmbDay.SelectedIndex = 0;
 
         _lblColor.AutoSize = true; _lblColor.Location = new Point(302, 15); _lblColor.Text = "Цвят";
         _cmbColor.Location = new Point(302, 38); _cmbColor.Width = 140; _cmbColor.DropDownStyle = ComboBoxStyle.DropDownList;
-        _cmbColor.Items.AddRange(["червен", "син", "зелен", "жълт", "лилав"]);
+        _cmbColor.Items.AddRange(new object[] { "червен", "син", "зелен", "жълт", "лилав" });
         _cmbColor.SelectedIndex = 0;
 
         _addBtn.Location = new Point(462, 36); _addBtn.Size = new Size(100, 29); _addBtn.Text = "Добави"; _addBtn.Click += AddBtn_Click;

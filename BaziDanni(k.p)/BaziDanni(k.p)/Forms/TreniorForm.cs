@@ -18,8 +18,6 @@ public sealed partial class TreniorForm : Form
         _btnEdit.Click += (_, _) => { _repository.Update(GetValues()); LoadData(); };
         _btnDelete.Click += (_, _) => { _repository.Delete(_txtId.Text.Trim()); LoadData(); };
         _grid.SelectionChanged += (_, _) => BindSelected();
-
-        UiStyler.MakeButtonsMoreVisible(this);
         LoadData();
     }
 

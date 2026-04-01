@@ -19,8 +19,6 @@ public sealed partial class ChlenForm : Form
         _btnDelete.Click += (_, _) => { _repository.Delete(_txtId.Text.Trim()); LoadData(); };
         _btnRefresh.Click += (_, _) => LoadData();
         _grid.SelectionChanged += (_, _) => BindSelected();
-
-        UiStyler.MakeButtonsMoreVisible(this);
         LoadData();
     }
 

@@ -10,8 +10,6 @@ public sealed partial class ZapisaniAbonamentiForm : Form
     {
         _repository = new ZapisaniAbonamentiRepository(cs);
         InitializeComponent();
-        UiStyler.StyleToolStrip(_strip);
-        UiStyler.MakeButtonsMoreVisible(this);
         LoadData();
     }
     private void AddItem_Click(object? s, EventArgs e){ _repository.Insert(GetValues()); LoadData(); }

@@ -13,9 +13,6 @@ public sealed partial class DenSedmicaForm : Form
         _repository = new DenSedmicaRepository(cs);
 
         InitializeComponent();
-
-        UiStyler.StyleToolStrip(_toolbar);
-        UiStyler.MakeButtonsMoreVisible(this);
         LoadData();
     }
 

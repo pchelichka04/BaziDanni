@@ -23,7 +23,6 @@ public sealed partial class GrupaForm : Form
 
         InitializeComponent();
 
-        UiStyler.MakeButtonsMoreVisible(this);
         LoadLookups();
         LoadData();
     }

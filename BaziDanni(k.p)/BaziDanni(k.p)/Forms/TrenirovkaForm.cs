@@ -10,7 +10,6 @@ public sealed partial class TrenirovkaForm : Form
     {
         _repository = new TrenirovkaRepository(cs);
         InitializeComponent();
-        UiStyler.MakeButtonsMoreVisible(this);
         LoadData();
     }
     private void BtnAdd_Click(object? s, EventArgs e){ _repository.Insert(GetValues()); LoadData(); }
